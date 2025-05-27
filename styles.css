@@ -94,20 +94,109 @@ h1 {
 }
 
 /* Estilos existentes */
-button {
-    background-color: #3498db;
-    color: white;
+.option-button {
+    padding: 15px 25px;
+    margin: 10px;
     border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 5px;
+    border-radius: 15px;
+    background-color: #4CAF50;
+    color: white;
     cursor: pointer;
-    font-size: 1rem;
-    margin: 0.5rem;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    font-size: 1.1em;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-button:hover {
-    background-color: #2980b9;
+.option-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.pop-animation {
+    animation: pop 0.5s ease-out;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.bounce-animation {
+    animation: bounce 0.5s ease-out;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(-20px); opacity: 0; }
+    50% { transform: translateY(10px); }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+.floating-food {
+    position: fixed;
+    font-size: 2em;
+    animation: float 3s ease-in infinite;
+    z-index: 100;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-100px); opacity: 0; }
+}
+
+.level-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #4CAF50;
+    transition: width 0.3s ease;
+}
+
+.question-counter {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.question-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.question-text {
+    font-size: 1.2em;
+    color: #343a40;
+    margin: 0;
+    line-height: 1.5;
 }
 
 .difficulty-selector,

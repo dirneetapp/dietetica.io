@@ -296,25 +296,69 @@ function startGame(difficulty = 'Normal', practiceMode = false) {
     startTimer();
 }
 
+// Función para barajar array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Función para obtener preguntas aleatorias del nivel actual
+function getRandomQuestions() {
+    const level = gameData.levels[gameData.currentLevel];
+    return shuffleArray([...level.questions]);
+}
+
+// Función para crear animación de comida
+function createFoodAnimation() {
+    const foods = ['🍎', '🍌', '🥕', '🥑', '🥦', '🍇', '🥝', '🍊', '🍅', '🥬', '🥒', '🌽', '🥔', '🥖', '🥨', '🥚', '🥩', '🍗', '🍖', '🧀', '🥜', '🍞', '🥐', '🥗', '🥙', '🌮', '🌯', '🍳', '🥣', '🥪'];
+    const food = foods[Math.floor(Math.random() * foods.length)];
+    const foodElement = document.createElement('div');
+    foodElement.className = 'floating-food';
+    foodElement.textContent = food;
+    foodElement.style.left = Math.random() * 90 + 'vw';
+    document.getElementById('game-area').appendChild(foodElement);
+    setTimeout(() => foodElement.remove(), 3000);
+}
+
 // Función para mostrar pregunta actual
 function showQuestion() {
     const level = gameData.levels[gameData.currentLevel];
-    const question = level.questions[gameData.currentQuestion];
+    if (!level.randomQuestions || level.randomQuestions.length === 0) {
+        level.randomQuestions = getRandomQuestions();
+    }
+    const question = level.randomQuestions[gameData.currentQuestion];
     
     document.getElementById('game-area').innerHTML = `
-        <h2>${level.name} - Pregunta ${gameData.currentQuestion + 1}</h2>
-        <p>${question.question}</p>
+        <div class="level-header">
+            <h2>${level.name}</h2>
+            <div class="progress-bar">
+                <div class="progress" style="width: ${(gameData.currentQuestion + 1) / level.questions.length * 100}%"></div>
+            </div>
+            <span class="question-counter">Pregunta ${gameData.currentQuestion + 1}/${level.questions.length}</span>
+        </div>
+        <div class="question-container bounce-animation">
+            <p class="question-text">${question.question}</p>
+        </div>
     `;
 
     const optionsContainer = document.getElementById('options-container');
     optionsContainer.innerHTML = '';
-    question.options.forEach((option, index) => {
+    shuffleArray([...question.options]).forEach((option, index) => {
         optionsContainer.innerHTML += `
-            <button onclick="checkAnswer(${index})" class="option-button">
+            <button onclick="checkAnswer(${question.options.indexOf(option)})" 
+                    class="option-button pop-animation"
+                    style="animation-delay: ${index * 0.2}s">
                 ${option}
             </button>
         `;
     });
+
+    // Crear animación de comida aleatoria
+    createFoodAnimation();
+    setInterval(createFoodAnimation, 5000);
 }
 
 // Función para verificar respuesta
