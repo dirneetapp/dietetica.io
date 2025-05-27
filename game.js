@@ -20,6 +20,19 @@ const achievements = [
     { id: 'health_expert', name: 'Maestro de la Salud', description: 'Completa todos los niveles en dificultad difícil', unlocked: false }
 ];
 
+// Función para seleccionar personaje
+function selectCharacter(character) {
+    gameData.playerCharacter = character;
+    gameData.playerName = character === 'niño' ? 'Aventurero' : 'Aventurera';
+    
+    // Actualizar avatar y nombre
+    document.getElementById('player-name').textContent = gameData.playerName;
+    
+    // Transición a la pantalla de bienvenida
+    document.getElementById('character-select').classList.remove('active');
+    document.getElementById('welcome-screen').classList.add('active');
+}
+
 // Datos del juego
 const gameData = {
     currentLevel: 0,
@@ -62,6 +75,20 @@ const gameData = {
                     correct: 0,
                     explanation: 'Las naranjas son una excelente fuente de vitamina C.',
                     difficulty: 'Fácil'
+                },
+                {
+                    question: '¿Qué alimento es una legumbre?',
+                    options: ['Zanahoria', 'Lentejas', 'Manzana', 'Pollo'],
+                    correct: 1,
+                    explanation: 'Las lentejas son legumbres, ricas en proteínas vegetales y fibra.',
+                    difficulty: 'Fácil'
+                },
+                {
+                    question: '¿Cuál es un lácteo?',
+                    options: ['Pan', 'Yogur', 'Pescado', 'Miel'],
+                    correct: 1,
+                    explanation: 'El yogur es un producto lácteo rico en calcio y probióticos.',
+                    difficulty: 'Fácil'
                 }
             ]
         },
@@ -69,24 +96,38 @@ const gameData = {
             name: 'Hábitos Saludables',
             questions: [
                 {
-                    question: '¿Cuántos vasos de agua es recomendable beber al día?',
+                    question: '¿Cuántos vasos de agua deberías beber al día?',
                     options: ['2-3', '4-5', '6-8', '10-12'],
                     correct: 2,
-                    explanation: 'Es recomendable beber entre 6 y 8 vasos de agua al día para mantenerse hidratado.',
+                    explanation: 'Se recomienda beber 6-8 vasos de agua al día para mantenerse hidratado.',
                     difficulty: 'Normal'
                 },
                 {
-                    question: '¿Cuál es el mejor momento para comer frutas?',
-                    options: ['Solo en la cena', 'Entre comidas', 'Solo en el desayuno', 'No importa el momento'],
-                    correct: 3,
-                    explanation: 'Las frutas son saludables en cualquier momento del día, lo importante es consumirlas regularmente.',
+                    question: '¿Cuál es el mejor momento para hacer ejercicio?',
+                    options: ['Justo antes de dormir', 'Después de comer', 'En la mañana o tarde', 'Solo los fines de semana'],
+                    correct: 2,
+                    explanation: 'Es mejor hacer ejercicio en la mañana o tarde, evitando las horas de comida.',
                     difficulty: 'Normal'
                 },
                 {
-                    question: '¿Cuántas comidas principales se recomienda hacer al día?',
-                    options: ['2', '3', '4', '5'],
+                    question: '¿Cuántas comidas principales debes hacer al día?',
+                    options: ['1', '2', '3', '5'],
+                    correct: 2,
+                    explanation: 'Se recomiendan 3 comidas principales: desayuno, almuerzo y cena.',
+                    difficulty: 'Fácil'
+                },
+                {
+                    question: '¿Cuánto tiempo debes dormir cada noche?',
+                    options: ['4-5 horas', '6-7 horas', '8-10 horas', 'Más de 12 horas'],
+                    correct: 2,
+                    explanation: 'Los niños necesitan dormir entre 8-10 horas para un desarrollo saludable.',
+                    difficulty: 'Normal'
+                },
+                {
+                    question: '¿Qué debes hacer antes de comer?',
+                    options: ['Ver la TV', 'Lavarte las manos', 'Hacer ejercicio', 'Tomar un refresco'],
                     correct: 1,
-                    explanation: 'Se recomiendan 3 comidas principales: desayuno, comida y cena.',
+                    explanation: 'Lavarse las manos antes de comer es importante para la higiene.',
                     difficulty: 'Fácil'
                 }
             ]
@@ -95,25 +136,39 @@ const gameData = {
             name: 'Nutrición Avanzada',
             questions: [
                 {
-                    question: '¿Qué vitamina se produce cuando tomamos el sol?',
+                    question: '¿Qué vitamina se produce con la exposición al sol?',
                     options: ['Vitamina A', 'Vitamina C', 'Vitamina D', 'Vitamina E'],
                     correct: 2,
-                    explanation: 'La vitamina D se produce en nuestra piel cuando nos exponemos al sol de forma moderada.',
+                    explanation: 'La vitamina D se produce en la piel cuando nos exponemos al sol.',
                     difficulty: 'Difícil'
                 },
                 {
-                    question: '¿Qué mineral es importante para prevenir la anemia?',
-                    options: ['Calcio', 'Hierro', 'Sodio', 'Potasio'],
+                    question: '¿Qué mineral es importante para los huesos?',
+                    options: ['Hierro', 'Calcio', 'Sodio', 'Potasio'],
                     correct: 1,
-                    explanation: 'El hierro es esencial para prevenir la anemia y se encuentra en carnes rojas, legumbres y verduras de hoja verde.',
+                    explanation: 'El calcio es esencial para tener huesos y dientes fuertes.',
+                    difficulty: 'Normal'
+                },
+                {
+                    question: '¿Qué alimento tiene más hierro?',
+                    options: ['Lentejas', 'Manzana', 'Plátano', 'Pepino'],
+                    correct: 0,
+                    explanation: 'Las lentejas son una excelente fuente de hierro vegetal.',
                     difficulty: 'Difícil'
                 },
                 {
-                    question: '¿Qué alimento tiene más proteína por 100 gramos?',
-                    options: ['Huevos', 'Lentejas', 'Pollo', 'Atún'],
-                    correct: 2,
-                    explanation: 'El pollo tiene aproximadamente 31g de proteína por 100g, más que los otros alimentos mencionados.',
+                    question: '¿Qué nutriente ayuda a la vista?',
+                    options: ['Vitamina A', 'Vitamina B', 'Vitamina K', 'Vitamina D'],
+                    correct: 0,
+                    explanation: 'La vitamina A es esencial para mantener una buena visión.',
                     difficulty: 'Difícil'
+                },
+                {
+                    question: '¿Qué fruta tiene más potasio?',
+                    options: ['Plátano', 'Manzana', 'Naranja', 'Pera'],
+                    correct: 0,
+                    explanation: 'El plátano es una excelente fuente de potasio.',
+                    difficulty: 'Normal'
                 }
             ]
         },
@@ -121,29 +176,82 @@ const gameData = {
             name: 'Alergias e Intolerancias',
             questions: [
                 {
-                    question: '¿Qué cereal contiene gluten?',
-                    options: ['Arroz', 'Trigo', 'Maíz', 'Quinoa'],
-                    correct: 1,
-                    explanation: 'El trigo contiene gluten, por eso las personas celíacas deben evitarlo.',
-                    difficulty: 'Normal'
-                },
-                {
-                    question: '¿Qué producto es naturalmente libre de lactosa?',
-                    options: ['Leche de vaca', 'Yogur natural', 'Leche de almendras', 'Queso fresco'],
-                    correct: 2,
-                    explanation: 'La leche de almendras es naturalmente libre de lactosa porque proviene de frutos secos.',
-                    difficulty: 'Normal'
-                },
-                {
-                    question: '¿Cuál es una alergia alimentaria común?',
-                    options: ['Frutos secos', 'Arroz', 'Patatas', 'Zanahorias'],
+                    question: '¿Qué alimento puede causar alergia común?',
+                    options: ['Frutos secos', 'Lechuga', 'Arroz', 'Patata'],
                     correct: 0,
-                    explanation: 'Los frutos secos son uno de los alérgenos más comunes, especialmente en niños.',
+                    explanation: 'Los frutos secos son uno de los alérgenos más comunes.',
+                    difficulty: 'Normal'
+                },
+                {
+                    question: '¿Qué personas no pueden tomar leche?',
+                    options: ['Intolerantes a la lactosa', 'Intolerantes al gluten', 'Alérgicos al huevo', 'Alérgicos al pescado'],
+                    correct: 0,
+                    explanation: 'Las personas intolerantes a la lactosa no pueden digerir bien la leche.',
+                    difficulty: 'Normal'
+                },
+                {
+                    question: '¿Qué cereal contiene gluten?',
+                    options: ['Arroz', 'Maíz', 'Trigo', 'Quinoa'],
+                    correct: 2,
+                    explanation: 'El trigo contiene gluten, que algunas personas no pueden consumir.',
+                    difficulty: 'Difícil'
+                },
+                {
+                    question: '¿Qué alimento puede causar alergia al marisco?',
+                    options: ['Gambas', 'Pollo', 'Zanahoria', 'Arroz'],
+                    correct: 0,
+                    explanation: 'Las gambas son un marisco que puede causar reacciones alérgicas.',
+                    difficulty: 'Normal'
+                },
+                {
+                    question: '¿Qué bebida no contiene lactosa?',
+                    options: ['Leche de vaca', 'Yogur natural', 'Leche de almendras', 'Batido de chocolate'],
+                    correct: 2,
+                    explanation: 'La leche de almendras es una alternativa sin lactosa.',
                     difficulty: 'Normal'
                 }
             ]
+        },
+        {
+            name: 'Alimentación y Ejercicio',
+            questions: [
+                {
+                    question: '¿Qué debes comer antes de hacer ejercicio?',
+                    options: ['Nada', 'Comida ligera', 'Comida pesada', 'Dulces'],
+                    correct: 1,
+                    explanation: 'Una comida ligera te da energía sin causar malestar.',
+                    difficulty: 'Normal'
+                },
+                {
+                    question: '¿Cuánto tiempo hay que esperar para nadar después de comer?',
+                    options: ['No hay que esperar', '30 minutos', '2 horas', '4 horas'],
+                    correct: 2,
+                    explanation: 'Es recomendable esperar 2 horas después de una comida principal.',
+                    difficulty: 'Normal'
+                },
+                {
+                    question: '¿Qué bebida es mejor durante el ejercicio?',
+                    options: ['Refresco', 'Agua', 'Café', 'Zumo'],
+                    correct: 1,
+                    explanation: 'El agua es la mejor opción para hidratarse durante el ejercicio.',
+                    difficulty: 'Fácil'
+                },
+                {
+                    question: '¿Qué alimento da energía rápida?',
+                    options: ['Plátano', 'Pescado', 'Huevo', 'Leche'],
+                    correct: 0,
+                    explanation: 'El plátano proporciona energía rápida gracias a sus azúcares naturales.',
+                    difficulty: 'Normal'
+                },
+                {
+                    question: '¿Qué debes comer después del ejercicio?',
+                    options: ['Solo proteínas', 'Proteínas y carbohidratos', 'Solo grasas', 'Nada'],
+                    correct: 1,
+                    explanation: 'La combinación de proteínas y carbohidratos ayuda a recuperarse.',
+                    difficulty: 'Difícil'
+                }
+            ]
         }
-    ]
     ]
 };
 
